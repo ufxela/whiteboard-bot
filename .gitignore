@@ -1,0 +1,19 @@
+# ignore files w/o extension
+*
+!*/
+!*.*
+
+!Makefile
+!memmap
+
+*.o
+*.d
+*.a
+*.d
+*.bin
+*.elf
+*.list
+*.DS_Store
+*.gdb_history
+
+.vscode/*
