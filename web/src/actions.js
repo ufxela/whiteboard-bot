@@ -1,60 +1,35 @@
+// todo: make fn to break up a points string into bite sized chunks and another fn to send those chunks
 export const API_URL = "";
 
 function onError(e) {
     console.error(e);
-    // alert("Error");
 }
 
-export async function peripheralWrite(number, value) {
+export function getPointsString(saveData){
+    saveData = JSON.parse(saveData);
+    console.log(saveData, typeof(saveData));
+    
+    for(const line of saveData.lines){
+        for(const point of line.points){
+            console.log("point", point);
+        }
+    }
+    return "unimplemented";
+}
+
+export async function sendPoints(pointsString) {
     try {
-        const data = { number, value };
-        console.log("peripheral write", data);
-        const response = await fetch(`${API_URL}/peripheral_write`, {
+        console.log("Sending points string:", pointsString);
+        const response = await fetch(`${API_URL}/points`, {
             method: 'post',
-            body: JSON.stringify(data)
+            body: pointsString
         }).then(e => e.text());
         console.log(response);
-        return response;
-    } catch (e) {
-        onError(e);
-    }
-}
-
-export async function peripheralRead(number) {
-    try {
-        const data = { number };
-        console.log("peripheral read", data);
-        const response = await fetch(`${API_URL}/peripheral_read`, {
-            method: 'post',
-            body: JSON.stringify(data)
-        }).then(e => e.text());
-        return Number(response);
-    } catch (e) {
-        onError(e);
-        return null;
-    }
-}
-
-export async function poll() {
-    try {
-        console.log("poll");
-        const response = await fetch(`${API_URL}/poll`).then(e => e.json());
-        console.log(response);
-        return response;
-    } catch (e) {
-        onError(e);
-    }
-}
-
-export async function executeBin(formData) {
-    try {
-        console.log("execute bin");
-        const response = await fetch(`${API_URL}/execute_bin`, {
-            method: 'POST',
-            body: formData
-        }).then(e => e.text());
-        console.log(response);
-        return response;
+        const res = {
+            success: true,
+            response: response,
+        }
+        return res;
     } catch (e) {
         onError(e);
     }
