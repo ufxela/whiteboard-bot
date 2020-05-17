@@ -1,6 +1,6 @@
 import './App.css';
 
-import { getPointsString, sendPoints } from './actions';
+import { breakDownPointsString, getPointsString, sendPoints } from './actions';
 
 import CanvasDraw from "react-canvas-draw";
 import React from 'react';
@@ -10,8 +10,13 @@ const App = () => {
   
   async function onCanvasSubmit(){
     if(canvasRef){
-      const res = await sendPoints(getPointsString(canvasRef.getSaveData()));
-      if(res.success){
+      let success = false;
+      const pointsStrings = breakDownPointsString(getPointsString(canvasRef.getSaveData()));
+      for(let i = 0; i < pointsStrings.length; i++){
+        let res = await sendPoints(pointsStrings[i], i, pointsStrings.length);
+        success &= res.success;
+      }
+      if(success){
         canvasRef.clear();
       }else{
         alert("there was an error in sending your points");
