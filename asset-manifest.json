@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/whiteboard-bot/static/css/main.a8de8a8c.chunk.css",
-    "main.js": "/whiteboard-bot/static/js/main.57681b0b.chunk.js",
-    "main.js.map": "/whiteboard-bot/static/js/main.57681b0b.chunk.js.map",
+    "main.js": "/whiteboard-bot/static/js/main.97bbb74e.chunk.js",
+    "main.js.map": "/whiteboard-bot/static/js/main.97bbb74e.chunk.js.map",
     "runtime-main.js": "/whiteboard-bot/static/js/runtime-main.3f256dcd.js",
     "runtime-main.js.map": "/whiteboard-bot/static/js/runtime-main.3f256dcd.js.map",
     "static/js/2.c86e6e80.chunk.js": "/whiteboard-bot/static/js/2.c86e6e80.chunk.js",
     "static/js/2.c86e6e80.chunk.js.map": "/whiteboard-bot/static/js/2.c86e6e80.chunk.js.map",
     "index.html": "/whiteboard-bot/index.html",
-    "precache-manifest.db2d90c8b3124f70b99f2c9174798b88.js": "/whiteboard-bot/precache-manifest.db2d90c8b3124f70b99f2c9174798b88.js",
+    "precache-manifest.1216963838a43c314083774832da37f2.js": "/whiteboard-bot/precache-manifest.1216963838a43c314083774832da37f2.js",
     "service-worker.js": "/whiteboard-bot/service-worker.js",
     "static/css/main.a8de8a8c.chunk.css.map": "/whiteboard-bot/static/css/main.a8de8a8c.chunk.css.map",
     "static/js/2.c86e6e80.chunk.js.LICENSE.txt": "/whiteboard-bot/static/js/2.c86e6e80.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.3f256dcd.js",
     "static/js/2.c86e6e80.chunk.js",
     "static/css/main.a8de8a8c.chunk.css",
-    "static/js/main.57681b0b.chunk.js"
+    "static/js/main.97bbb74e.chunk.js"
   ]
 }
