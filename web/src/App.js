@@ -1,6 +1,6 @@
 import './App.css';
 
-import { breakDownPointsString, getPointsString, sendPoints } from './actions';
+import { breakDownPointsString, getPointsString, reboot, sendPoints } from './actions';
 
 import CanvasDraw from "react-canvas-draw";
 import React from 'react';
@@ -29,6 +29,11 @@ const App = () => {
       canvasRef.clear();
     }
   }
+
+  async function onReboot(){
+    await reboot();
+    alert("pi rebooting");
+  }
   
   return ( 
     <div>
@@ -46,6 +51,9 @@ const App = () => {
       </button>
       <button onClick={onCanvasClear}>
         clear
+      </button>
+      <button onClick={onReboot}>
+        reboot
       </button>
     </div>
   );

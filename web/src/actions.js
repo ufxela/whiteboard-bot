@@ -1,4 +1,3 @@
-// todo: make fn to break up a points string into bite sized chunks and another fn to send those chunks
 export const API_URL = "";
 export const MAX_REQ_BODY = 512; // can probably be larger
 export const MAX_PTS_STR_LEN = MAX_REQ_BODY - 10; // allot space for metadata
@@ -7,19 +6,33 @@ function onError(e) {
     console.error(e);
 }
 
+/**
+ * Current ways to increase data efficiency:
+ * - stores relative offsets, instead of absolute data. Note: first data point is always absolute.
+ *   (saves between 3x and 100x amount of data, depending on a variety of factors)
+ * 
+ * Other ways to increase data efficiency: 
+ * - sample every Nth point (~N times more efficient), or coalesce series of small offsets into single larger offset
+ * - store as actual int data, not strings (~25.6 times more efficient)
+ * 
+ */ 
 export function getPointsString(saveData){
     saveData = JSON.parse(saveData);
     console.log(saveData, typeof(saveData));
     let pointsString = "";
 
+    let prev_x = 0, prev_y = 0;
     for(const line of saveData.lines){
         pointsString += 'p,'; // p for place
         for(const point of line.points){
-            // optionally: sample every Nth point to reduce data amount
-            // alternatively: calculate offsets, since we know should mostly be continuous
-            // as a result, we can reduce on data.
-            // alternatively: don't store as strings, store as actual int data.
-            pointsString += `${Math.round(point.x)},${Math.round(point.y)},`
+            let curr_x = Math.round(point.x);
+            let curr_y = Math.round(point.y);
+            if(curr_x - prev_x !== 0 && curr_y - prev_y !== 0){
+                // only send data if non zero.
+                pointsString += `${curr_x - prev_x},${curr_y - prev_y},`
+                prev_x = curr_x;
+                prev_y = curr_y;
+            }
         }
         pointsString += 'l,'; // l for lift
     }
@@ -85,6 +98,21 @@ export async function sendPoints(pointsString, currentStringIndex, totalStrings)
             body: dataString
         }).then(e => e.text());
         // console.log(response);
+        const res = {
+            success: true,
+            response: response,
+        }
+        return res;
+    } catch (e) {
+        onError(e);
+    }
+}
+
+export async function reboot(){
+    try {
+        const response = await fetch(`${API_URL}/poll`, {
+            method: 'GET',
+        }).then(e => e.text());
         const res = {
             success: true,
             response: response,
