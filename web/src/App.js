@@ -23,6 +23,10 @@ const App = () => {
         return;
       }else{
         newPointsString = pointsString.substring(prevPointsString.length);
+        if(newPointsString.length === 0){
+          alert("you didn't add any new points!")
+          return;
+        }
       }
 
       // break down into bite sized pieces because ESP is finnicky.
