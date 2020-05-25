@@ -25,10 +25,6 @@ export function getPointsString(saveData){
     for(const line of saveData.lines){
         let first = 1;
         for(const point of line.points){
-            if(first == 1){
-                pointsString += 'p,'; // p for place
-                first = 0;
-            }
             let curr_x = Math.round(point.x);
             let curr_y = Math.round(point.y);
             if(curr_x - prev_x !== 0 && curr_y - prev_y !== 0){
@@ -36,6 +32,10 @@ export function getPointsString(saveData){
                 pointsString += `${curr_x - prev_x},${curr_y - prev_y},`
                 prev_x = curr_x;
                 prev_y = curr_y;
+                if(first == 1){
+                    pointsString += 'p,'; // p for place
+                    first = 0;
+                }
             }
         }
         pointsString += 'l,'; // l for lift
