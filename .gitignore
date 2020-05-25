@@ -12,6 +12,8 @@
 *.DS_Store
 *.gdb_history
 
+libpi/includes/libesp-includes/credentials.h
+
 .vscode/*
 
 !Makefile

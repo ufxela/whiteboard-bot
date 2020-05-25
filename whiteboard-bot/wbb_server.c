@@ -130,8 +130,9 @@ static int isValidCharacter(char c){
     }
 }
 
+// ? maybe go to points in this handler, and only send response when job completed.
 response_t points_handler(request_t * req){
-    output("in points handler\n");
+    output("Received a points request\n");
 
     unsigned length = strlen(req->body);
     char * arg = kmalloc(length);
@@ -217,6 +218,11 @@ response_t points_handler(request_t * req){
         }
     }
 
+    // hack, gross. for some reason I'm missing the last lift. Could also solve this on the frontend by double sending lift.
+    wbb_action_t * lift = kmalloc(sizeof(wbb_action_t));
+    lift->type = LIFT;
+    Q_append(&wbb_positions, lift);
+
     //return response
     response_t dump;
     dump.content_length = 0;
@@ -294,28 +300,27 @@ static void esp_request_and_response(my_sw_uart_t * esp, char * command, unsigne
     int command_len = strlen(command);
     assert(command[command_len - 1] == '\n');
     assert(command[command_len - 2] == '\r');
-    output("\nCommand: %s", command);
+    // output("\nCommand: %s", command);
     esp_putk(esp, command);
 
     char response[1024];
     int nbytes = esp_read_timeout(esp, response, 1024, usec);
-    for(int i = 0; i < nbytes; i++){
-        output("%c", response[i]);
-    }
+    // for(int i = 0; i < nbytes; i++){
+    //     output("%c", response[i]);
+    // }
 }
 
 void wbb_execute_action(wbb_t * wbb, wbb_action_t * action){
-    // ! need to actually handler first action differently than others.
     // output("executing action %d %d\n", action->x, action->y);
     if(action->type == PLACE){
         wbb_place_pen(wbb);
     }else if(action->type == LIFT){
         wbb_lift_pen(wbb);
     }else if(action->type == GOTO){
-        if(action->x > 1000 || action->y > 700){ // hacky filtering
+        if(action->x > 1000 || action->y > 700){ // hacky filtering, but we know that canvas is 1000x700. 
             return; 
         }
-        wbb_go_to_coords_relative(wbb, 10*action->x, -10*action->y);
+        wbb_go_to_coords_relative(wbb, 20*action->x, -20*action->y);
     }else{
         unimplemented();
     }
@@ -360,7 +365,7 @@ void wbb_server(wbb_t * wbb){
                 response_t res = route->handler(&req);
                 err = http_send_response(&e, res);
             }else{
-                output("route %s ignored b/c doesn't exist\n", req.path);
+                // output("route %s ignored b/c doesn't exist\n", req.path);
             }
         }
         //if there was a disconnection, then call get_connection(&e, ch)
