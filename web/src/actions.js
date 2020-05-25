@@ -20,7 +20,7 @@ export function getPointsString(saveData){
     saveData = JSON.parse(saveData);
     console.log(saveData, typeof(saveData));
     let pointsString = "";
-
+    pointsString += 'l,'; // l for lift
     let prev_x = 0, prev_y = 0;
     for(const line of saveData.lines){
         let first = 1;
