@@ -12,9 +12,9 @@ const App = () => {
     if(canvasRef){
       let success = false;
       const pointsStrings = breakDownPointsString(getPointsString(canvasRef.getSaveData()));
-      for(let i = 0; i < pointsStrings.length; i++){
+      for(let i = 0; i < 1 /*pointsStrings.length*/; i++){
         let res = await sendPoints(pointsStrings[i], i, pointsStrings.length);
-        success &= res.success;
+        success &= true; // lol
       }
       if(success){
         canvasRef.clear();

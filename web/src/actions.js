@@ -1,5 +1,5 @@
 export const API_URL = "";
-export const MAX_REQ_BODY = 512; // can probably be larger
+export const MAX_REQ_BODY = 750; // can probably be larger
 export const MAX_PTS_STR_LEN = MAX_REQ_BODY - 10; // allot space for metadata
 
 function onError(e) {
@@ -23,8 +23,12 @@ export function getPointsString(saveData){
 
     let prev_x = 0, prev_y = 0;
     for(const line of saveData.lines){
-        pointsString += 'p,'; // p for place
+        let first = 1;
         for(const point of line.points){
+            if(first == 1){
+                pointsString += 'p,'; // p for place
+                first = 0;
+            }
             let curr_x = Math.round(point.x);
             let curr_y = Math.round(point.y);
             if(curr_x - prev_x !== 0 && curr_y - prev_y !== 0){
@@ -93,14 +97,13 @@ export async function sendPoints(pointsString, currentStringIndex, totalStrings)
     }
     try {
         console.log("Sending data string:", dataString);
-        const response = await fetch(`${API_URL}/points`, {
+        await fetch(`${API_URL}/points`, {
             method: 'POST',
             body: dataString
-        }).then(e => e.text());
+        }).then();
         // console.log(response);
         const res = {
             success: true,
-            response: response,
         }
         return res;
     } catch (e) {
