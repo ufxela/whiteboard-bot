@@ -32,7 +32,7 @@ export function getPointsString(saveData){
                 pointsString += `${curr_x - prev_x},${curr_y - prev_y},`
                 prev_x = curr_x;
                 prev_y = curr_y;
-                if(first == 1){
+                if(first === 1){
                     pointsString += 'p,'; // p for place
                     first = 0;
                 }
