@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/whiteboard-bot/static/css/main.a8de8a8c.chunk.css",
-    "main.js": "/whiteboard-bot/static/js/main.6f924142.chunk.js",
-    "main.js.map": "/whiteboard-bot/static/js/main.6f924142.chunk.js.map",
+    "main.js": "/whiteboard-bot/static/js/main.d3357eeb.chunk.js",
+    "main.js.map": "/whiteboard-bot/static/js/main.d3357eeb.chunk.js.map",
     "runtime-main.js": "/whiteboard-bot/static/js/runtime-main.3f256dcd.js",
     "runtime-main.js.map": "/whiteboard-bot/static/js/runtime-main.3f256dcd.js.map",
-    "static/js/2.c86e6e80.chunk.js": "/whiteboard-bot/static/js/2.c86e6e80.chunk.js",
-    "static/js/2.c86e6e80.chunk.js.map": "/whiteboard-bot/static/js/2.c86e6e80.chunk.js.map",
+    "static/js/2.8c4eb40f.chunk.js": "/whiteboard-bot/static/js/2.8c4eb40f.chunk.js",
+    "static/js/2.8c4eb40f.chunk.js.map": "/whiteboard-bot/static/js/2.8c4eb40f.chunk.js.map",
     "index.html": "/whiteboard-bot/index.html",
-    "precache-manifest.5f28a806d4710a6325c84957d2416e87.js": "/whiteboard-bot/precache-manifest.5f28a806d4710a6325c84957d2416e87.js",
+    "precache-manifest.b63a6adcf290a871f3e3efdfd0d2ff4c.js": "/whiteboard-bot/precache-manifest.b63a6adcf290a871f3e3efdfd0d2ff4c.js",
     "service-worker.js": "/whiteboard-bot/service-worker.js",
     "static/css/main.a8de8a8c.chunk.css.map": "/whiteboard-bot/static/css/main.a8de8a8c.chunk.css.map",
-    "static/js/2.c86e6e80.chunk.js.LICENSE.txt": "/whiteboard-bot/static/js/2.c86e6e80.chunk.js.LICENSE.txt"
+    "static/js/2.8c4eb40f.chunk.js.LICENSE.txt": "/whiteboard-bot/static/js/2.8c4eb40f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.3f256dcd.js",
-    "static/js/2.c86e6e80.chunk.js",
+    "static/js/2.8c4eb40f.chunk.js",
     "static/css/main.a8de8a8c.chunk.css",
-    "static/js/main.6f924142.chunk.js"
+    "static/js/main.d3357eeb.chunk.js"
   ]
 }
