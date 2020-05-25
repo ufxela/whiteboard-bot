@@ -3,12 +3,8 @@
 !*/
 !*.*
 
-!Makefile
-!memmap
-
 *.o
 *.d
-*.a
 *.d
 *.bin
 *.elf
@@ -17,3 +13,10 @@
 *.gdb_history
 
 .vscode/*
+
+!Makefile
+!memmap
+!my-install
+!start.o
+!bootcode.bin
+!start.elf

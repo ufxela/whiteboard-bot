@@ -1,0 +1,15 @@
+<!-- Code deployed on the pi -->
+<style>body {background: black; }</style>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+<script>$(function() {
+    var url = "https://ufxela.github.io";
+    var base = $('<base href="' + url + '">'); // needed to fix relative url imports for scripts, etc.
+    $("head").append(base);
+    $("body").load("https://ufxela.github.io/whiteboard-bot/?q=" + Math.random(), function() {
+        base.remove();
+    });
+});
+</script>
