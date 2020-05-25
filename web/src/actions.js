@@ -14,32 +14,45 @@ function onError(e) {
  * Other ways to increase data efficiency: 
  * - sample every Nth point (~N times more efficient), or coalesce series of small offsets into single larger offset
  * - store as actual int data, not strings (~25.6 times more efficient)
+ * - coalesce 0 writes (e.g. if we write (0, 5) and then (0, 10), then better to just write (0, 15))
  * 
  */ 
 export function getPointsString(saveData){
     saveData = JSON.parse(saveData);
     console.log(saveData, typeof(saveData));
     let pointsString = "";
+    // let lastPoint;
     pointsString += 'l,'; // l for lift
     let prev_x = 0, prev_y = 0;
+    let first = 1;
     for(const line of saveData.lines){
-        let first = 1;
+        let firstInLine = 1;
         for(const point of line.points){
             let curr_x = Math.round(point.x);
             let curr_y = Math.round(point.y);
-            if(curr_x - prev_x !== 0 && curr_y - prev_y !== 0){
-                // only send data if non zero.
-                pointsString += `${curr_x - prev_x},${curr_y - prev_y},`
+            if(first === 0){
+                if(curr_x - prev_x !== 0 || curr_y - prev_y !== 0){
+                    // only send data if non zero.
+                    pointsString += `${curr_x - prev_x},${curr_y - prev_y},`
+                    prev_x = curr_x;
+                    prev_y = curr_y;
+                    if(firstInLine === 1){
+                        pointsString += 'p,'; // p for place
+                        firstInLine = 0;
+                    }
+                    // lastPoint = point;
+                }
+            }else{ // ignore first point, to keep things relative.
                 prev_x = curr_x;
                 prev_y = curr_y;
-                if(first === 1){
-                    pointsString += 'p,'; // p for place
-                    first = 0;
-                }
+                first = 0;
             }
         }
         pointsString += 'l,'; // l for lift
     }
+    // if(lastPoint){
+    //     pointsString += `-${Math.round(lastPoint.x)},-${Math.round(lastPoint.y)}`;
+    // }
     return pointsString;
 }
 
@@ -101,7 +114,6 @@ export async function sendPoints(pointsString, currentStringIndex, totalStrings)
             method: 'POST',
             body: dataString
         }).then();
-        // console.log(response);
         const res = {
             success: true,
         }
