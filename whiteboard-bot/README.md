@@ -2,7 +2,7 @@
 
 A whiteboard robot which you can command in several intuitive ways and draw what you want.
 
-See a video demo [here](unimplemented).
+See a video demo [here](https://youtu.be/kDsBAop92nA).
 
 Inspired by [this](https://www.youtube.com/watch?v=T0jwdrgVBBc&vl=en), and a never completed robotics project that I started with the Stanford Robotics Club. 
 
