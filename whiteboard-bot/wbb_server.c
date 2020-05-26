@@ -143,11 +143,15 @@ response_t points_handler(request_t * req){
     for(int i = 0; i < length; i++){
         if(!isValidCharacter(arg[i])){
             output("RECIEVED INVALID CHARACTER '%c'\nin position %d \nfull string: %s", arg[i], i, arg);
-            response_t dump;
-            dump.content_length = 0;
-            dump.status_code = 400;
-            dump.status_text = "ERROR";
-            return dump;
+            if(arg[i-1] == ',' && (arg[i-2] == 'l' || arg[i-2] == 'p')){
+                length = i; // case that we can probably recover. optimistic approach: truncate here and hope it draws what we want. lmao.
+            }else{
+                response_t dump;
+                dump.content_length = 0;
+                dump.status_code = 400;
+                dump.status_text = "ERROR";
+                return dump;
+            }
         }
     }
 
@@ -168,10 +172,13 @@ response_t points_handler(request_t * req){
 
     assert(num < total); //dumb
 
-    while(1){
+    // ugly, but prevents hanging
+    unsigned start = timer_get_usec();
+    #define POINTS_TIMEOUT 100000
+    output("here\n");
+    while(timer_get_usec() - start < POINTS_TIMEOUT){
 
         int x, y;
-
         arg = comma_i + 1;
         comma_i = strchr(arg, ',');
         if(strlen(comma_i + 1) == 0){
@@ -218,11 +225,16 @@ response_t points_handler(request_t * req){
         }
     }
 
+    output("here now\n");
+
     // hack, gross. for some reason I'm missing the last lift. Could also solve this on the frontend by double sending lift.
     wbb_action_t * lift = kmalloc(sizeof(wbb_action_t));
     lift->type = LIFT;
     Q_append(&wbb_positions, lift);
 
+
+    output("lift appended\n");
+    
     //return response
     response_t dump;
     dump.content_length = 0;
@@ -320,7 +332,7 @@ void wbb_execute_action(wbb_t * wbb, wbb_action_t * action){
         if(action->x > 1000 || action->y > 700){ // hacky filtering, but we know that canvas is 1000x700. 
             return; 
         }
-        wbb_go_to_coords_relative(wbb, 20*action->x, -20*action->y);
+        wbb_go_to_coords_relative(wbb, 15*action->x, -15*action->y);
     }else{
         unimplemented();
     }
